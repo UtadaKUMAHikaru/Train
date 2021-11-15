@@ -3,7 +3,7 @@ import numpy as np
 
 latent_dim = 100
 img_shape = (1, 128, 128)
-
+ 
 class Discriminator(nn.Module):
     def __init__(self):
         super(Discriminator, self).__init__()
