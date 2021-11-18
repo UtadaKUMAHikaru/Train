@@ -196,7 +196,7 @@ for epoch in range(opt.n_epochs):
         
         # 两部分
         # Loss for real images
-        validity_real = discriminator(real_imgs, labels)
+         
         d_real_loss = adversarial_loss(validity_real, valid)
 
         # Loss for fake images
