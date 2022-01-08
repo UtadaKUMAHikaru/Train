@@ -28,20 +28,23 @@ def load_data():
     all_categories = []
 
     def find_files(path):
+        # ic(glob.glob(path)) # data文件夹开始的
         return glob.glob(path)
 
     # Read a file and split into lines
     def read_lines(filename):
-        lines = io.open(filename, encoding='utf-8').read().strip().split('\n')
+        lines = io.open(filename, encoding='utf-8').read().strip().split('\n') # 读入文件的每行
         # ic(lines)
         # ic([unicode_to_ascii(line) for line in lines])
         return [unicode_to_ascii(line) for line in lines]
 
     for filename in find_files('data/names/*.txt'):
+        # ic(os.path.basename(filename)) # 文件名
+        # ic(os.path.splitext(os.path.basename(filename))) # 获得文件名主体和扩展名
         category = os.path.splitext(os.path.basename(filename))[0]
         # ic(category)
-        all_categories.append(category)
-        # ic(all_categories)
+        all_categories.append(category) # 对于一个文件添加
+        # ic(all_categories) # 字符串类型
 
         lines = read_lines(filename)
         category_lines[category] = lines
@@ -78,14 +81,14 @@ def letter_to_tensor(letter):
 # Turn a line into a <line_length x 1 x n_letters>,
 # or an array of one-hot letter vectors
 # 一行是一个单词，是一个序列
-def line_to_tensor(line):
+def line_to_tensor(line): # 转换成张量
     tensor = torch.zeros(len(line), 1, N_LETTERS)
     for i, letter in enumerate(line):
         tensor[i][0][letter_to_index(letter)] = 1
     return tensor
 
 
-def random_training_example(category_lines, all_categories):
+def random_training_example(category_lines, all_categories): # 随机取一个训练样本
     def random_choice(a):
         random_idx = random.randint(0, len(a) - 1)
         return a[random_idx]
@@ -99,8 +102,9 @@ def random_training_example(category_lines, all_categories):
 
 
 if __name__ == '__main__':
-    print(ALL_LETTERS)
-    print(N_LETTERS)
+    ic(ALL_LETTERS)
+    ic(N_LETTERS) # 57
+    
     print(unicode_to_ascii('Ślusàrski'))
 
     category_lines, all_categories = load_data()
